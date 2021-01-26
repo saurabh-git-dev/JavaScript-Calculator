@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="shortcut icon" href="icon1.png">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            background: url('https://images.unsplash.com/6/blurred_lines.jpeg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');
+            background-position: center;
+            background-size: cover;
+            background-blend-mode: darken;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        .heading {
+            width: 200px;
+            margin: 20px auto;
+            color: white;
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+
+        #calc {
+            width: 330px;
+            height: 500px;
+            margin: auto;
+            background: linear-gradient(white, rgb(233, 233, 233), rgb(248, 248, 248));
+            opacity: 0.9;
+            background-blend-mode: normal;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 6px 6px 20px 3px rgb(0, 0, 0), -6px -6px 20px 3px rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            padding: 2px;
+        }
+
+        #result {
+            display: flex;
+            flex-direction: column;
+            height: 210px;
+            width: auto;
+        }
+
+        #history {
+            height: 120px;
+            margin: 0px 16px;
+            display: flex;
+            align-items: center;
+            overflow: auto;
+        }
+
+        #historyvalue {
+            width: 265px;
+            text-align: right;
+            font-size: large;
+            color: rgba(0, 0, 0, 0.596);
+            margin: auto;
+        }
+
+        #output {
+            height: 80px;
+            margin: 0px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .resultclass,
+        #inputvalue {
+            width: 265px;
+            text-align: right;
+            font-size: x-large;
+            color: rgba(0, 0, 0);
+            overflow: auto;
+        }
+
+        .resultclass {
+            font-size: 21px;
+            color: rgba(0, 0, 0, 0.541);
+        }
+
+        .line {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.293);
+            width: 300px;
+            margin-left: 17px;
+            box-shadow: 2px 2px 3px rgb(128, 128, 128, 0.6);
+        }
+
+        .keyboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .operator {
+            width: 43px;
+            height: 43px;
+            font-size: 24px;
+            padding: 0px;
+            margin: 5px 18px;
+            color: rgba(90, 89, 89, 0.908);
+            background: transparent;
+            border: hidden;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        #backspace {
+            font-size: 20px;
+        }
+
+        #empty {
+            font-size: 15px;
+        }
+
+        #clear,
+        #backspace,
+        #percent,
+        #divison,
+        #multi,
+        #add,
+        #minus,
+        #equal {
+            background: rgba(255, 68, 1, 0.73);
+            border-radius: 50%;
+            color: white;
+        }
+
+        #equal {
+            background-color: rgba(0, 68, 255, 0.73);
+        }
+
+        #clear,
+        #backspace {
+            background-color: rgba(132, 0, 255, 0.73);
+        }
+
+        .operator:hover {
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1 class="heading">Calculator</h1>
+    <section id="main">
+        <div id="calc">
+            <div id="result">
+                <div id="history">
+                    <p id="historyvalue"></p>
+                </div>
+                <div id="output">
+                    <p id="inputvalue"></p>
+                    <p id="outputvalue" class="resultclass hide"></p>
+                </div>
+            </div>
+
+            <div class="line"></div>
+
+            <div class="keyboard">
+                <button class="operator" id="clear">C</button>
+                <button class="operator" id="backspace">CE</button>
+                <button class="operator" id="percent">%</button>
+                <button class="operator" id="divison">/</button>
+
+                <button class="operator" id="7">7</button>
+                <button class="operator" id="8">8</button>
+                <button class="operator" id="9">9</button>
+                <button class="operator" id="multi">x</button>
+
+                <button class="operator" id="4">4</button>
+                <button class="operator" id="5">5</button>
+                <button class="operator" id="6">6</button>
+                <button class="operator" id="minus">-</button>
+
+                <button class="operator" id="1">1</button>
+                <button class="operator" id="2">2</button>
+                <button class="operator" id="3">3</button>
+                <button class="operator" id="add">+</button>
+
+
+                <button class="operator" id="empty">Cl-his</button>
+                <button class="operator" id="0">0</button>
+                <button class="operator" id="dot">.</button>
+                <button class="operator" id="equal">=</button>
+
+
+
+            </div>
+        </div>
+    </section>
+    <script>
+        function gethistory(num) {
+            return document.getElementById("historyvalue").innerText;
+        }
+        function printhistory(num) {
+            document.getElementById("historyvalue").innerText = num;
+        }
+
+        function getinput(num) {
+            return document.getElementById("inputvalue").innerText;
+        }
+        function printinput(num) {
+            document.getElementById("inputvalue").innerText = num;
+        }
+        function getoutput(num) {
+            return document.getElementById("outputvalue").innerText.replace("= ", "");
+        }
+        function printoutput(num) {
+            document.getElementById("outputvalue").innerText = "= " + num;
+        }
+
+
+
+        var operation = document.getElementsByClassName("operator");
+        for (let i = 0; i < operation.length; i++) {
+            (operation[i]).addEventListener("click", function () {
+                if (this.id >= 0 && this.id <= 9) {
+                    if (getinput() == 0)
+                        printinput(this.innerText);
+                    else {
+                        printinput(getinput() + this.innerText);
+                    }
+                    if (document.getElementById("outputvalue").style.color == "rgba(255, 68, 1, 0.73)") {
+                        document.getElementById("outputvalue").style.cssText = "color: rgba(0, 0, 0, 0.541);font-size:21px";
+                        printinput(getoutput() + this.innerText);
+                        if (getoutput() == "Invalid Input" || getoutput() == "Infinity") {
+                            printinput(this.innerText)
+                        }
+                    }
+                    calculation();
+                }
+                else if (this.id == "add" || this.id == "minus" || this.id == "multi" || this.id == "divison" || this.id == "dot") {
+
+                    let check = getinput().slice(-1);
+
+                    if (getinput() == "0" && (this.id == "add" || this.id == "minus"))
+                        printinput("0" + this.innerText);
+                    else if (getinput() == "0" && (this.id == "multi" || this.id == "divison")) {
+                        printinput("1" + this.innerText);
+                    }
+                    else if ((check == "-" || check == "x" || check == "+" || check == "/") && this.id == "add") {
+                        printinput(getinput().replace(check, this.innerText));
+                    }
+                    else if ((check == "+" || check == "x" || check == "/" || check == "-") && this.id == "minus") {
+                        printinput(getinput().replace(check, this.innerText));
+                    }
+                    else if ((check == "-" || check == "+" || check == "/" || check == "x") && this.id == "multi") {
+
+                        printinput(getinput().replace(check, this.innerText));
+                    }
+                    else if ((check == "-" || check == "x" || check == "+" || check == "/") && this.id == "divison") {
+                        printinput(getinput().replace(check, this.innerText));
+                    }
+                    else {
+                        printinput(getinput() + this.innerText);
+                    }
+
+
+                    if (document.getElementById("outputvalue").style.color == "rgba(255, 68, 1, 0.73)") {
+                        document.getElementById("outputvalue").style.cssText = "color: rgba(0, 0, 0, 0.541);font-size:21px";
+                        //    console.log(getoutput()+"hi");
+                        if (getoutput() == "Invalid Input" || getoutput() == "Infinity") {
+                            printinput("0");
+
+                        }
+                        else
+                            printinput(getoutput() + this.innerText);
+                    }
+                    calculation();
+                }
+
+                else if (this.id == "clear") {
+
+                    printinput(0);
+                    printoutput(0);
+                }
+
+                else if (this.id == "backspace") {
+                    let output = getinput();
+                    if (output.length == 1)
+                        printinput(0);
+                    else {
+                        printinput(output.substring(0, output.length - 1));
+                    }
+
+                    calculation();
+                }
+
+                else if (this.id == "percent") {
+                    // console.log(getinput().slice(-1)+"hi");
+                    let check = getinput().slice(-1);
+                    if (!(getinput() == 0 || check == "%" || check == "-" || check == "x" || check == "+" || check == "/")) {
+
+                        printinput(getinput() + this.innerText);
+                    }
+
+                    percentage();
+                    calculation();
+
+                }
+                else if (this.id == "equal") {
+                    let check = gethistory().slice(-1);
+
+                    document.getElementById("historyvalue").innerText += "\n" + getinput() + "\n" + "=" + getoutput();
+
+
+                    printinput("");
+                    if (document.getElementById("outputvalue").style.color == "rgba(255, 68, 1, 0.73)") {
+                        document.getElementById("outputvalue").style.cssText = "color: rgba(0, 0, 0, 0.541);font-size:21px";
+
+                        printinput("0");
+                        printoutput(getinput());
+
+                    }
+                    else
+                        document.getElementById("outputvalue").style.cssText = "color:rgba(255, 68, 1, 0.73);font-size:x-large";
+                }
+                else {
+                    printhistory("");
+                }
+
+                if (getoutput() == "NaN") {
+                    printoutput("Invalid Input");
+                }
+            });
+
+        }
+
+        function calculation() {
+            printoutput(getinput());
+            percentage();
+            readoperand();
+            product();
+            additionsub();
+        }
+
+        function readoperator() {
+            let indexarray = new Array();
+            let inp = getoutput();
+            let oparr = ["+", "-", "x", "/", "%"];
+            for (let i = 0, j = 0; i < inp.length; i++) {
+
+                for (let index = 0; index < oparr.length; index++) {
+                    if (inp[i] == oparr[index]) {
+                        indexarray[j] = i;
+                        j++;
+                    }
+
+                }
+            }
+            return indexarray;
+        }
+
+
+        function string1(indexarray, input, index) {
+            if (indexarray.indexOf(index) == 0)
+                return input.slice(0, index);
+            else
+                return input.slice(indexarray[indexarray.indexOf(index) - 1] + 1, index);
+        }
+
+        function string2(indexarray, input, index) {
+            if (indexarray.indexOf(index) == indexarray.length - 1)
+                return input.slice(index + 1, input.length);
+            else
+                return input.slice(index + 1, indexarray[indexarray.indexOf(index) + 1]);
+        }
+
+
+        function readoperand() {
+            let input = getoutput();
+            for (let index = 0; index < input.length; index++) {
+                if (typeof input == "number") {
+                    printoutput(input);
+                    break;
+                }
+                if (input[index] == "/") {
+                    var indexarray = readoperator();
+                    // console.log(input[index]);
+                    //  console.log(indexarray.indexOf(index)) 
+                    // console.log(indexarray);
+                    var str1 = string1(indexarray, input, index);
+                    var str2 = string2(indexarray, input, index);
+                    var str3 = str1 + "/" + str2;
+                    // console.log(parseFloat(str1));
+                    // console.log(parseFloat(str2));
+                    mainout = parseFloat(str1) / parseFloat(str2);
+                    printoutput(input.replace(str3, mainout));
+                    // input = getinput();
+                    // console.log(getoutput());
+                    readoperand();
+                    break;
+                }
+            }
+
+        }
+
+
+        function product() {
+            let input = getoutput();
+            for (let index = 0; index < input.length; index++) {
+                if (typeof input == "number") {
+                    printoutput(input);
+                    break;
+                }
+
+                if (input[index] == "x") {
+                    var indexarray = readoperator();
+                    // console.log(indexarray);
+                    var str1 = string1(indexarray, input, index);
+                    var str2 = string2(indexarray, input, index);
+                    var str3 = str1 + "x" + str2;
+                    // console.log(parseFloat(str1));
+                    // console.log(parseFloat(str2));
+                    mainout = parseFloat(str1) * parseFloat(str2);
+                    printoutput(input.replace(str3, mainout));
+                    // console.log(getoutput());
+                    product();
+                    break;
+                }
+            }
+        }
+
+
+
+        function additionsub() {
+            let input = getoutput();
+            let str1;
+            let str2;
+            let j = 0;
+            let mainsumout = 0;
+            for (let index = 0; index < input.length; index++) {
+                if (input[index] == "-" || input[index] == "+") {
+                    let indexarray = readoperator();
+                    if (j == 0) {
+                        str1 = input.slice(j, index)
+                        mainsumout += parseFloat(str1);
+                    }
+                    else {
+                        str1 = input.slice(j, index)
+                        mainsumout += parseFloat(str1);
+                    }
+                    j = index;
+                }
+                if (index == input.length - 1) {
+                    str1 = input.slice(j, input.length)
+                    mainsumout += parseFloat(str1);
+
+                }
+                if ((input[index] == "-" || input[index] == "+") && index == 0) {
+                    printinput(getinput().replace(input[index], "0" + input[index]));
+                }
+            }
+            printoutput(mainsumout);
+
+        }
+
+
+        function percentage() {
+            let input = getoutput();
+            let str1;
+            let mainperout = 1;
+            for (let index = 0; index < input.length; index++) {
+                if (input[index] == "%") {
+                    let indexarray = readoperator();
+
+
+                    if (indexarray.indexOf(index) == "0" || input[indexarray[indexarray.indexOf(index) - 1]] == "x" || input[indexarray[indexarray.indexOf(index) - 1]] == "/") {
+                        str1 = input.slice(indexarray[indexarray.indexOf(index) - 1] + 1, index)
+                        // console.log(str1);
+                        mainperout = parseFloat(str1) / 100;
+                        printoutput(input.replace(str1 + "%", mainperout));
+                        printinput(getoutput());
+                        break;
+                    }
+                    else {
+                        let temp = (input.slice(0, indexarray[indexarray.indexOf(index) - 1]));
+                        printoutput(temp);
+                        readoperand();
+                        product();
+                        additionsub();
+                        let tempoutput = (getoutput() * input.slice(indexarray[indexarray.indexOf(index) - 1], index)) / 100;
+                        printinput(input.replace(input.slice(indexarray[indexarray.indexOf(index) - 1], index) + "%", tempoutput));
+                        calculation();
+                    }
+
+                }
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>
